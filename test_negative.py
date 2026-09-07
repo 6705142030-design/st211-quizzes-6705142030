@@ -1,0 +1,26 @@
+import pytest
+from validators import validate_email, validate_age
+
+# Positive tests (Happy path)
+def test_valid_email_accepted():
+    assert validate_email("user@example.com") is True
+
+def test_valid_age_accepted():
+    assert validate_age(25) is True
+
+# Negative tests (Error handling)
+def test_email_without_at_rejected():
+    with pytest.raises(ValueError):
+        validate_email("notanemail.com")
+
+def test_email_without_domain_rejected():
+    with pytest.raises(ValueError):
+        validate_email("user")
+
+def test_negative_age_rejected():
+    with pytest.raises(ValueError):
+        validate_age(-5)
+
+def test_age_as_string_rejected():
+    with pytest.raises(TypeError):
+        validate_age("twenty")
